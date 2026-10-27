@@ -1,0 +1,7 @@
+# Instructor check only (not part of the learner lab). From this folder run:  forge test -vv
+[profile.default]
+src = "contracts"
+test = "instructor-check/test"
+out = "instructor-check/out"
+cache_path = "instructor-check/cache"
+solc_version = "0.8.37"
