@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.37;
+pragma solidity ^0.8.37;
 
 // !!! DELIBERATELY VULNERABLE: FOR THE LAB 2 REENTRANCY DEMONSTRATION ONLY. NEVER DEPLOY OR COPY. !!!
 // refund() sends the ether BEFORE it zeroes the backer's balance (interaction before effect).

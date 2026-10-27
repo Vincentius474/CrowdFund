@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.37;
+pragma solidity ^0.8.37;
 
 // !!! ATTACK CONTRACT: FOR THE LAB 2 REENTRANCY DEMONSTRATION ON THE REMIX VM ONLY. NEVER DEPLOY TO A REAL NETWORK. !!!
 
