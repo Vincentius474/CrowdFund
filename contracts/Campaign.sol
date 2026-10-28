@@ -52,7 +52,7 @@ contract Campaign {
         deadline = block.timestamp + durationMinutes * 1 minutes;
     }
 
-    // Backers send ether here; the contract keeps it.
+    // Backers send ether here, the contract keeps it.
     function contribute() external payable {
         require(msg.value > 0, ZeroContribution());
         require(block.timestamp < deadline, CampaignEnded(deadline));
