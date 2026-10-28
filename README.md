@@ -1,5 +1,8 @@
 # CrowdFund
 
+<img width="1383" height="891" alt="Screenshot 2026-10-24 130357" src="https://github.com/user-attachments/assets/b7037b10-ec3e-400b-a9dd-a01e8a7d0bd2" />
+<img width="1901" height="900" alt="Screenshot 2026-10-24 130530" src="https://github.com/user-attachments/assets/6bdcfeec-a8e5-4e45-8cea-770c95dce88f" />
+
 A small Ethereum crowdfunding project. The `Campaign` contract holds backers' ETH until its deadline: the creator can withdraw if the goal was met, and backers can reclaim their contributions if it was not. A static browser interface reads campaign state and lets users interact through a browser wallet.
 
 ## Features
