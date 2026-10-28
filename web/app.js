@@ -202,35 +202,35 @@ setTimeout(() => {
 }, 500);
 
 // Wallet discovery (EIP-6963): wallets announce themselves; the page never assumes one.
-// const found = new Map();
-// function addWalletButton(detail) {
-//   if (found.has(detail.info.uuid)) return;
-//   found.set(detail.info.uuid, detail);
-//   const button = document.createElement('button');
-//   button.type = 'button';
-//   if (/^data:image\//.test(detail.info.icon)) {
-//     const img = document.createElement('img');
-//     img.src = detail.info.icon;
-//     img.alt = '';
-//     button.append(img);
-//   }
-//   button.append(document.createTextNode(`Connect ${detail.info.name}`));
-//   button.addEventListener('click', () => connect({ name: detail.info.name, provider: detail.provider }));
-//   $('wallets').append(button);
-// }
+const found = new Map();
+function addWalletButton(detail) {
+  if (found.has(detail.info.uuid)) return;
+  found.set(detail.info.uuid, detail);
+  const button = document.createElement('button');
+  button.type = 'button';
+  if (/^data:image\//.test(detail.info.icon)) {
+    const img = document.createElement('img');
+    img.src = detail.info.icon;
+    img.alt = '';
+    button.append(img);
+  }
+  button.append(document.createTextNode(`Connect ${detail.info.name}`));
+  button.addEventListener('click', () => connect({ name: detail.info.name, provider: detail.provider }));
+  $('wallets').append(button);
+}
 
-// window.addEventListener('eip6963:announceProvider', (e) => addWalletButton(e.detail));
-// window.dispatchEvent(new Event('eip6963:requestProvider'));
+window.addEventListener('eip6963:announceProvider', (e) => addWalletButton(e.detail));
+window.dispatchEvent(new Event('eip6963:requestProvider'));
 
 // Older wallets only set window.ethereum, so offer it if nothing announces itself.
-// setTimeout(() => {
-//   if (found.size === 0 && window.ethereum) {
-//     addWalletButton({
-//       info: { uuid: 'window.ethereum', name: 'browser wallet', icon: '', rdns: '' },
-//       provider: window.ethereum,
-//     });
-//   }
-// }, 500);
+setTimeout(() => {
+  if (found.size === 0 && window.ethereum) {
+    addWalletButton({
+      info: { uuid: 'window.ethereum', name: 'browser wallet', icon: '', rdns: '' },
+      provider: window.ethereum,
+    });
+  }
+}, 500);
 
 // Check first, then ask the wallet to sign, then wait for the chain to confirm.
 async function send(functionName, value) {
