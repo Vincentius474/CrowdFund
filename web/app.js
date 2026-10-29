@@ -88,7 +88,7 @@ const listedEvents = new Map(); // events already listed, keyed by block and log
 
 // Render the last 20 events in the order they were mined, with the most recent at the bottom.
 function renderEvents() {
-  const eventList = byId('events');
+  const eventList = $('events');
   eventList.replaceChildren();
   const rows = [...listedEvents.values()].sort((earlier, later) =>
     Number(earlier.blockNumber - later.blockNumber) || earlier.logIndex - later.logIndex);
@@ -109,11 +109,11 @@ function addLogs(logs) {
 // Past events from the deployment block, then new ones as they arrive.
 async function startEvents() {
   const past = await publicClient.getContractEvents({
-    address: deployment.address, abi: deployment.abi, fromBlock: BigInt(deployment.deployBlock), toBlock: 'latest',
+    address: cfg.address, abi: cfg.abi, fromBlock: BigInt(cfg.deployBlock), toBlock: 'latest',
   });
   addLogs(past);
   publicClient.watchContractEvent({
-    address: deployment.address, abi: deployment.abi, pollingInterval: 1000,
+    address: cfg.address, abi: cfg.abi, pollingInterval: 1000,
     onLogs: async (logs) => { addLogs(logs); await refresh().catch(() => {}); },
     onError: (error) => say('banner', `Event watching stopped: ${explain(error)}`, 'bad'),
   });
@@ -185,7 +185,7 @@ function addWalletButton(detail) {
   }
   button.append(document.createTextNode(`Connect ${detail.info.name}`));
   button.addEventListener('click', () => connect({ name: detail.info.name, provider: detail.provider }));
-  byId('wallets').append(button);
+  $('wallets').append(button);
 }
 
 window.addEventListener('eip6963:announceProvider', (event) => addWalletButton(event.detail));
@@ -201,36 +201,6 @@ setTimeout(() => {
   }
 }, 500);
 
-// Wallet discovery (EIP-6963): wallets announce themselves; the page never assumes one.
-const found = new Map();
-function addWalletButton(detail) {
-  if (found.has(detail.info.uuid)) return;
-  found.set(detail.info.uuid, detail);
-  const button = document.createElement('button');
-  button.type = 'button';
-  if (/^data:image\//.test(detail.info.icon)) {
-    const img = document.createElement('img');
-    img.src = detail.info.icon;
-    img.alt = '';
-    button.append(img);
-  }
-  button.append(document.createTextNode(`Connect ${detail.info.name}`));
-  button.addEventListener('click', () => connect({ name: detail.info.name, provider: detail.provider }));
-  $('wallets').append(button);
-}
-
-window.addEventListener('eip6963:announceProvider', (e) => addWalletButton(e.detail));
-window.dispatchEvent(new Event('eip6963:requestProvider'));
-
-// Older wallets only set window.ethereum, so offer it if nothing announces itself.
-setTimeout(() => {
-  if (found.size === 0 && window.ethereum) {
-    addWalletButton({
-      info: { uuid: 'window.ethereum', name: 'browser wallet', icon: '', rdns: '' },
-      provider: window.ethereum,
-    });
-  }
-}, 500);
 
 // Check first, then ask the wallet to sign, then wait for the chain to confirm.
 async function send(functionName, value) {
@@ -258,9 +228,9 @@ async function send(functionName, value) {
 }
 
 // The user clicked the Contribute button, so send a transaction to the contract.
-byId('contribute-form').addEventListener('submit', (event) => {
+$('contribute-form').addEventListener('submit', (event) => {
   event.preventDefault();
-  const text = byId('amount').value.trim();
+  const text = $('amount').value.trim();
   if (!/^\d+(\.\d{1,18})?$/.test(text) || parseEther(text) === 0n) {
     say('tx', 'Enter an amount above zero, such as 0.5.', 'bad');
     return;
@@ -268,8 +238,8 @@ byId('contribute-form').addEventListener('submit', (event) => {
   send('contribute', parseEther(text));
 });
 
-byId('btn-withdraw').addEventListener('click', () => send('withdraw'));
-byId('btn-refund').addEventListener('click', () => send('refund'));
+$('btn-withdraw').addEventListener('click', () => send('withdraw'));
+$('btn-refund').addEventListener('click', () => send('refund'));
 
 // The page starts by loading the contract's deployment information, then reading the contract and starting to watch for events.
 async function main() {

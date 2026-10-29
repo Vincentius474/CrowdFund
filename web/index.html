@@ -6,18 +6,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Security-Policy"
             content="default-src 'none'; script-src 'self'; style-src 'self'; img-src data:; connect-src 'self' http://127.0.0.1:8545; base-uri 'none'; form-action 'none'">
-        <title>Crowdfund Campaign</title>
+        <meta name="theme-color" content="#080d19">
+        <meta name="description" content="A transparent, on-chain crowdfunding campaign dashboard.">
+        <title>FundFlow — On-chain Crowdfunding</title>
         <link rel="stylesheet" href="style.css">
     </head>
 
     <body>
         <main>
+            <header class="app-header">
+                <a class="brand" href="#" aria-label="FundFlow home">
+                    <span>fundflow<span class="brand-period">.</span></span>
+                </a>
+                <div class="network-pill"><span class="network-dot"></span> On-chain crowdfunding</div>
+            </header>
 
-            <h1>Crowdfund Campaign</h1>
+            <div class="page-intro">
+                <p class="eyebrow">COMMUNITY FUNDING / WEB3</p>
+                <h1>Crowdfund <span>with purpose.</span></h1>
+                <p class="intro-copy">Back ideas you believe in. Transparent contributions, verifiable on-chain.</p>
+            </div>
             <p id="banner" role="status"></p>
 
             <section aria-labelledby="h-contract">
-                <h2 id="h-contract">Contract</h2>
+                <h2 id="h-contract"><span class="section-icon" aria-hidden="true"></span> Campaign overview</h2>
                 <dl>
                     <dt>Address</dt>
                     <dd id="v-address">-</dd>
@@ -37,7 +49,7 @@
             </section>
 
             <section aria-labelledby="h-wallet">
-                <h2 id="h-wallet">Wallet</h2>
+                <h2 id="h-wallet"><span class="section-icon" aria-hidden="true"></span> Your wallet</h2>
                 <div id="wallets"></div>
                 <dl>
                     <dt>Wallet</dt>
@@ -53,19 +65,19 @@
             </section>
 
             <section aria-labelledby="h-actions">
-                <h2 id="h-actions">Actions</h2>
+                <h2 id="h-actions"><span class="section-icon" aria-hidden="true"></span> Make it happen</h2>
                 <form id="contribute-form">
-                    <label for="amount">Amount (ETH)</label>
+                    <label for="amount">Contribution amount <span class="field-unit">ETH</span></label>
                     <input id="amount" inputmode="decimal" autocomplete="off" value="0.5">
-                    <button id="btn-contribute" type="submit" disabled>Contribute</button>
+                    <button id="btn-contribute" type="submit" disabled>Contribute <span aria-hidden="true">↗</span></button>
                 </form>
-                <button id="btn-withdraw" type="button" disabled>Withdraw (creator, goal met)</button>
-                <button id="btn-refund" type="button" disabled>Refund (backer, goal missed)</button>
+                <button id="btn-withdraw" type="button" disabled>Withdraw funds</button>
+                <button id="btn-refund" type="button" disabled>Claim refund</button>
                 <p id="tx" role="status"></p>
             </section>
 
             <section aria-labelledby="h-events">
-                <h2 id="h-events">Events</h2>
+                <h2 id="h-events"><span class="section-icon" aria-hidden="true"></span> Activity feed</h2>
                 <ul id="events"></ul>
             </section>
 
